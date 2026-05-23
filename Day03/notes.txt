@@ -1,0 +1,24 @@
+### Resource
+
+- A `resource` block defines an actual infrastructure object that OpenTofu or Terraform will create and manage.
+- Syntax:
+  `resource "<PROVIDER_RESOURCE_TYPE>" "<LOCAL_NAME>" { ... }`
+- In this folder, the resource is:
+  `resource "aws_s3_bucket" "first-bucket"`
+- `aws_s3_bucket` is the AWS resource type.
+- `first-bucket` is the local name used to reference this resource inside the configuration.
+
+### What `main.tf` does
+
+- Declares the AWS provider in `required_providers`.
+- Pins the AWS provider version to `~> 6.0`.
+- Configures the AWS provider to use region `ap-south-1`.
+- Creates an S3 bucket named `ankur-28-apple-bucket`.
+- Adds tags to the bucket:
+  `Name = "My bucket"`
+  `Environment = "Dev"`
+
+### Key idea
+
+- Providers tell OpenTofu or Terraform which platform to talk to.
+- Resources describe the actual cloud objects to create on that platform.
