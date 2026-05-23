@@ -1,0 +1,6 @@
+### Provider
+
+- Plugins which are used to interact with cloud/saas/api products also called target apis.
+- Job of provider is to convert .tf files and code in format understood by cloud / saas apis
+- providers (terraform or opentofu) have their own versions (makes sense given the fact they are plugins) apart from the version of terraform / opentofu.
+- Example - aws provider , databricks providers etc.
