@@ -1,0 +1,77 @@
+Day 01 Notes
+Video: "Why Infrastructure As a Code?" / Intro to IaC with Tofu
+YouTube: https://www.youtube.com/watch?v=s5fwSG_00P8
+
+1. What is Infrastructure as Code (IaC)?
+- IaC means defining infrastructure using code instead of creating resources manually from a cloud console.
+- Examples of infrastructure: servers, networks, storage, databases, load balancers, security rules.
+- The goal is to make infrastructure repeatable, version-controlled, and easy to automate.
+
+2. Why IaC is needed
+- Manual provisioning takes too much time.
+- Repeating the same setup across multiple environments is difficult.
+- Human error increases with repetitive manual steps.
+- Teams become dependent on a few people who know how to provision infra manually.
+- Environment drift happens:
+  dev, test, and prod may not match.
+- Security settings can be missed during manual setup.
+- Cleaning up unused resources manually is slow and can increase cloud cost.
+
+3. Problems with manual infrastructure
+- Not scalable for enterprise environments.
+- Hard to maintain consistency across applications and environments.
+- Troubleshooting is harder when setup steps are not documented as code.
+- "It works on my machine" type problems also happen in infrastructure when environments differ.
+
+4. How Tofu helps
+- Tofu is an IaC tool used to create, update, and destroy infrastructure.
+- It works by talking to provider APIs such as AWS APIs.
+- You write the desired infrastructure once and reuse it many times.
+- Changes can be tracked in Git.
+- Infrastructure becomes easier to review, share, and automate through CI/CD.
+
+5. Benefits of using Tofu / IaC
+- Saves time
+- Reduces manual effort
+- Improves consistency
+- Makes infra changes auditable through version control
+- Helps with cost optimization by making teardown easier
+- Improves maintainability
+- Frees engineers to focus on higher-value work instead of repetitive setup
+
+6. How Tofu works
+- Tofu configuration is written in `.tf` files.
+- The language used is HCL:
+  HashiCorp Configuration Language.
+- HCL is human-readable and designed for infrastructure definitions.
+- You declare the desired state, and Terraform figures out what actions are needed.
+
+7. Typical workflow
+- Write Tofu code
+- Store the code in version control such as GitHub
+- Run Tofu from CLI or through a CI/CD pipeline
+- Tofu compares desired state with actual state and calls the cloud provider API
+
+8. Core Tofu commands mentioned
+- `tofu init`
+  Initializes the working directory and downloads required components.
+
+- `tofu validate`
+  Checks configuration syntax and basic validity.
+
+- `tofu plan`
+  Shows a dry run of what Tofu will create, change, or destroy.
+
+- `tofu apply`
+  Applies the planned changes and provisions the infrastructure.
+
+- `tofu destroy`
+  Deletes the infrastructure managed by the configuration.
+
+9. Key takeaway
+- IaC solves the operational pain of manual cloud provisioning.
+- Tofu provides a structured and automated way to manage infrastructure.
+- The main value is repeatability, consistency, speed, and reduced risk.
+
+10. Short summary
+Infrastructure as Code is the practice of managing infrastructure through code instead of manual clicks. Tofu helps automate this process using `.tf` files and standard commands like `init`, `plan`, `apply`, and `destroy`, making infrastructure management faster, safer, and more consistent.
