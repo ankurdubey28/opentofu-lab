@@ -1,0 +1,19 @@
+### State Management
+
+1. State in Terraform / OpenTofu represents Terraform's recorded view of the actual resources it manages and their known attributes/status.
+2. The state file is created after the first successful `terraform apply` / `tofu apply`, and Terraform / OpenTofu uses this file as its working source of truth to decide what to create, modify, or delete.
+3. It commonly exists as `terraform.tfstate` and is a JSON file. It is strongly advised not to modify it manually and to interact with it using CLI commands such as `terraform state list`.
+4. Before `terraform apply` is run for the first time, there is no state file. Terraform / OpenTofu assumes the state is empty, so it plans to create all declared resources. After the first successful apply, `terraform.tfstate` is created.
+5. By default, the state file is created in the same directory as the configuration files such as `main.tf`, but using a remote backend is preferred because:
+   5.1. it helps collaboration and shared access
+   5.2. it helps manage concurrent access using state locking
+   5.3. example: S3 backend
+6. Desired state = what is defined in the configuration files.
+7. Actual state = the real resource on the remote system/provider.
+8. Terraform state = Terraform's last remembered state of the remote system for the resources it manages.
+9. Actual state may differ from Terraform state.
+   9.1 This can happen when a resource is changed through some other mechanism such as cloud CLI, cloud console/UI, or another tool instead of Terraform / OpenTofu.
+   9.2 When this happens, the state file and the actual resource are no longer in sync. This is called drift.
+10. Backup state file = `terraform.tfstate.backup`, which stores the previous version of the state file so recovery may be possible if the current state file is damaged or changed unexpectedly.
+11. During `terraform plan`, Terraform compares the desired state from configuration with the remembered current state from the state file, and usually also refreshes against the actual remote infrastructure.
+12. During `terraform apply`, Terraform performs the changes decided in the plan and then updates the state file to reflect the new known state.
