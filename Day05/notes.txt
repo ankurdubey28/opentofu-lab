@@ -1,0 +1,60 @@
+Terraform Project Folder Structure
+
+- `main.tf`: stores all resource definitions.
+- `variables.tf`: declares all input variables.
+- `outputs.tf`: defines what information is shown after `terraform apply`.
+- `versions.tf`: locks Terraform and provider versions for consistency.
+- `providers.tf`: contains provider configuration.
+- `backend.tf`: configures where Terraform state files are stored.
+- `terraform.tfvars`: keeps actual variable values for an environment. This should not be pushed to Git if it contains sensitive or environment-specific data.
+- `terraform.tfvars.example`: example template that shows which variables need values. This file can be committed.
+- `.gitignore`: excludes unnecessary files from version control.
+- `README.md`: documents the project structure and usage.
+
+File Organization Principles
+
+- Separation of Concerns: Group related resources together.
+- Logical Grouping: Organize by service or function.
+- Consistent Naming: Use clear, descriptive file names.
+- Modular Approach: Keep files focused on specific areas.
+- Documentation: Include `README.md` and comments.
+
+Best Practices
+
+- Consistent Naming
+
+  - Use clear, descriptive file names.
+  - Follow team conventions.
+  - Use lowercase with hyphens or underscores.
+
+- Logical Grouping
+
+  - Group related resources together.
+  - Separate by AWS service or function.
+  - Consider dependencies when organizing.
+
+- Size Management
+
+  - Keep files manageable (`< 500 lines`).
+  - Split large files by functionality.
+  - Use modules for reusable components.
+
+- Dependencies
+
+  - Place provider and backend configs first.
+  - Define variables before using them.
+  - Output values at the end.
+
+- Documentation
+
+  - Include `README.md`.
+  - Comment complex configurations.
+  - Document variable purposes.
+
+Common File Organization Mistakes
+
+- Everything in `main.tf`: Makes code hard to navigate.
+- Inconsistent naming: Confuses team members.
+- Mixed concerns: Resources that don't belong together.
+- No documentation: Difficult for others to understand.
+- Overly complex structure: Simple is often better.
