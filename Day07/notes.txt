@@ -1,0 +1,146 @@
+VARIABLE INITIALIZATION PRECEDENCE
+
+Day06 variable:
+
+```hcl
+variable "environment" {
+  default = "dev"
+  type    = string
+}
+```
+
+OpenTofu/Terraform can initialize variables in multiple ways.
+The precedence in `precedence.png` goes from low to high:
+
+1. Default value in the `variable` block
+2. Environment variables
+3. `terraform.tfvars`
+4. `terraform.tfvars.json`
+5. `*.auto.tfvars` or `*.auto.tfvars.json`
+6. CLI `-var` or `-var-file`
+
+Higher precedence overrides lower precedence.
+
+Examples
+
+1. Using the default
+If nothing else is provided, the default is used.
+
+```hcl
+variable "environment" {
+  default = "dev"
+}
+```
+
+Result:
+`environment = "dev"`
+
+2. Using environment variable
+You can export a variable using the `TF_VAR_` prefix.
+
+```bash
+export TF_VAR_environment=qa
+tofu plan
+```
+
+Result:
+`environment = "qa"`
+
+3. Using `terraform.tfvars`
+Create a file named `terraform.tfvars`.
+
+```hcl
+environment = "stage"
+```
+
+Run:
+
+```bash
+tofu plan
+```
+
+Result:
+`environment = "stage"`
+
+4. Using `terraform.tfvars.json`
+Create a file named `terraform.tfvars.json`.
+
+```json
+{
+  "environment": "uat"
+}
+```
+
+Run:
+
+```bash
+tofu plan
+```
+
+Result:
+`environment = "uat"`
+
+5. Using `*.auto.tfvars`
+Any file ending with `.auto.tfvars` is loaded automatically.
+
+Example file: `dev.auto.tfvars`
+
+```hcl
+environment = "prod"
+```
+
+Run:
+
+```bash
+tofu plan
+```
+
+Result:
+`environment = "prod"`
+
+6. Using CLI `-var`
+This has the highest precedence in the image.
+
+```bash
+tofu plan -var="environment=sandbox"
+```
+
+Result:
+`environment = "sandbox"`
+
+7. Using CLI `-var-file`
+You can also pass a file explicitly.
+
+Example file: `custom.tfvars`
+
+```hcl
+environment = "dr"
+```
+
+Run:
+
+```bash
+tofu plan -var-file="custom.tfvars"
+```
+
+Result:
+`environment = "dr"`
+
+Override example
+
+If you have:
+- default = `dev`
+- `terraform.tfvars` = `stage`
+- `TF_VAR_environment=qa`
+- `tofu plan -var="environment=prod"`
+
+Final value used:
+`environment = "prod"`
+
+Summary
+
+- Default is the fallback.
+- Env vars override default.
+- `terraform.tfvars` and `terraform.tfvars.json` override lower sources.
+- `*.auto.tfvars` files override those.
+- CLI `-var` and `-var-file` have the highest precedence in this diagram.
