@@ -1,0 +1,37 @@
+Meta Arguments
+
+Meta-arguments are special arguments in OpenTofu/Terraform that control how resources or modules are created and managed.
+
+1. depends_on
+- Used to define an explicit dependency between resources.
+- Ensures one resource is created only after another resource is ready.
+- Example use case: Resource B must wait for Resource A.
+
+2. count
+- Used to create multiple instances of the same resource.
+- Usually works with a numeric value.
+- Example idea: `count = 3` creates 3 resource instances.
+
+3. for_each
+- Used to create multiple resource instances from a map or set.
+- Helpful when each instance needs a unique key or value.
+- Better than `count` when instances are identified by names instead of indexes.
+
+4. provider
+- Used to specify which provider configuration a resource should use.
+- Useful when the same provider is configured multiple times, such as different regions or accounts.
+
+5. lifecycle
+- Used to control resource behavior during create, update, and destroy operations.
+- Common lifecycle options:
+- `create_before_destroy`
+- `prevent_destroy`
+- `ignore_changes`
+- `replace_triggered_by`
+
+Summary
+- `depends_on` = explicit dependency
+- `count` = create multiple copies using a number
+- `for_each` = create multiple instances using keys/values
+- `provider` = choose provider configuration
+- `lifecycle` = control resource replacement and protection behavior
