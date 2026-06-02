@@ -1,0 +1,51 @@
+ LIFECYCLE RULES
+
+Lifecycle rules in OpenTofu/Terraform control how a resource behaves during creation, update, replacement, and destruction.
+
+The `lifecycle.png` image highlights these lifecycle-related rules:
+
+1. `create_before_destroy`
+- Tells OpenTofu/Terraform to create the replacement resource first and destroy the old one after.
+- Useful when downtime must be avoided during replacement.
+- Common when changing arguments that force a new resource.
+
+2. `prevent_destroy`
+- Stops a resource from being destroyed by mistake.
+- Helpful for critical resources such as production buckets, databases, or long-lived infrastructure.
+- If a plan tries to destroy the resource, Terraform/OpenTofu throws an error.
+
+3. `ignore_changes`
+- Tells OpenTofu/Terraform to ignore changes to specific resource attributes.
+- Useful when some values are updated outside Terraform or managed by another system.
+- Prevents unnecessary diffs for those selected attributes.
+
+4. `replace_triggered_by`
+- Forces a resource to be replaced when another resource or attribute changes.
+- Useful when a resource must be recreated to stay in sync with a related dependency.
+- Gives more control over replacement behavior.
+
+5. `precondition` and `postcondition`
+- `precondition` checks a rule before the resource is applied.
+- `postcondition` checks a rule after the resource is created or updated.
+- Useful for validating assumptions and enforcing safety checks in infrastructure code.
+
+Example
+
+```hcl
+resource "aws_s3_bucket" "example" {
+  bucket = "demo-bucket-example"
+
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes  = []
+  }
+}
+```
+
+Summary
+
+- `create_before_destroy` helps reduce downtime during replacement
+- `prevent_destroy` protects important resources
+- `ignore_changes` skips selected attribute drift
+- `replace_triggered_by` forces replacement when related values change
+- `precondition` and `postcondition` add validation checks
