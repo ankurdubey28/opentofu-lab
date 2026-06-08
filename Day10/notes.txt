@@ -1,0 +1,82 @@
+TERRAFORM EXPRESSIONS
+
+Terraform/OpenTofu expressions are used to calculate values dynamically inside configuration files.
+
+The `expressions.png` image highlights three common expression types:
+
+1. Conditional expressions
+- Syntax:
+`condition ? true_value : false_value`
+- Used to choose one value when a condition is true and another when it is false.
+- Helpful for environment-based configuration and small decision-making logic inside code.
+
+Common use cases shown in the image:
+- Choose instance types based on environment such as `dev` vs `prod`
+- Enable or disable monitoring based on configuration
+- Select different AMIs based on region
+- Set different resource counts for environments
+- Apply environment-specific tags
+
+Example
+
+```hcl
+instance_type = var.environment == "prod" ? "t3.medium" : "t3.micro"
+```
+
+2. Dynamic blocks
+- Used to generate nested blocks dynamically from a collection.
+- Helpful when a resource needs repeated child blocks and you do not want to hardcode each one manually.
+
+Syntax
+
+```hcl
+dynamic "block_name" {
+  for_each = var.collection
+  content {
+    # content
+  }
+}
+```
+
+Important points from the image:
+- `for_each` iterates over a list or map
+- `content` defines what each generated block should contain
+- You can access values using `block_name.value` or `block_name.key`
+
+Example
+
+```hcl
+dynamic "ingress" {
+  for_each = var.ingress_ports
+  content {
+    from_port   = ingress.value
+    to_port     = ingress.value
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+```
+
+3. Splat expressions
+- Used to extract the same attribute from multiple resources or objects.
+- Useful when working with lists of resources created using `count`.
+
+Syntax
+
+```hcl
+resource_list[*].attribute
+```
+
+Example
+
+```hcl
+aws_instance.web[*].public_ip
+```
+
+This returns the `public_ip` value from all instances in the list.
+
+Summary
+
+- Conditional expressions help choose values based on conditions
+- Dynamic blocks help generate repeated nested blocks from collections
+- Splat expressions help collect the same attribute from multiple resources

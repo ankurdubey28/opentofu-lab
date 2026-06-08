@@ -144,3 +144,10 @@ Summary
 - `terraform.tfvars` and `terraform.tfvars.json` override lower sources.
 - `*.auto.tfvars` files override those.
 - CLI `-var` and `-var-file` have the highest precedence in this diagram.
+
+Subtle but important point
+
+- `variables.tf` and `terraform.tfvars` do not serve the same purpose.
+- `variables.tf` is used to declare input variables, their types, descriptions, and optional default values.
+- `terraform.tfvars` is used to assign actual values to those declared variables.
+- If a variable already has a `default`, then using `terraform.tfvars` is optional and is only needed when you want to override that fallback value without editing the variable declaration.
