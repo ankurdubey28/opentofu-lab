@@ -1,0 +1,16 @@
+1. Terraform / opentofu uses HCL language , which is not a concrete programming language
+2. Thus it allows only using inbuilt functions , and not declaring new functions.
+3. Terraform functions can be broadly grouped into categories such as string, numeric, collection, type conversion, file, lookup, validation, and date/time functions.
+4. String functions are used to manipulate text values.
+5. Numeric functions are used to perform calculations or number-related operations.
+6. Collection functions work with lists, maps, sets, and other grouped values.
+7. Type conversion functions help convert values from one type to another when needed.
+8. File functions are used to read or work with file-based content.
+9. Lookup functions help retrieve values from maps or similar data structures.
+10. Validation functions are used to check whether input values satisfy expected conditions.
+11. Date and time functions help generate or format time-related values.
+
+Terraform Console
+12. `terraform console` is used to test Terraform expressions interactively.
+13. It helps check functions, variables, and expression outputs.
+14. Exit the console using `exit` or `Ctrl+D`.
