@@ -1,0 +1,72 @@
+# Data Sources
+
+1. A data source in Terraform / OpenTofu is an abstraction that allows the configuration
+   to read information from outside the current resource definitions.
+2. Data sources are used when you want to fetch existing infrastructure details instead
+   of creating a new resource.
+3. They are commonly used to look up values such as VPC IDs, subnet IDs, AMI IDs,
+   security groups, availability zones, account details, and secrets metadata.
+4. Data sources help avoid hardcoding values in the configuration.
+5. This makes the code more reusable, portable, and easier to maintain.
+
+## Syntax
+
+6. Data sources are declared using the `data` block.
+
+```hcl
+data "provider_type" "local_name" {
+  # arguments
+}
+```
+
+7. `provider_type` defines which data source to use.
+8. `local_name` is the name used to reference that data source inside the configuration.
+
+## Reference
+
+9. The values from a data source are accessed using:
+
+```hcl
+data.provider_type.local_name.attribute
+```
+
+10. Example:
+
+```hcl
+data "aws_availability_zones" "available" {}
+```
+
+```hcl
+data.aws_availability_zones.available.names
+```
+
+## Resource vs Data Source
+
+11. A `resource` block creates, updates, or deletes infrastructure.
+12. A `data` block only reads existing information.
+13. Resource blocks are managed by Terraform / OpenTofu state as created objects.
+14. Data sources are queried during planning and applying to retrieve values for use
+    elsewhere in the configuration.
+
+## Common Use Cases
+
+15. Fetch the latest AMI before launching an EC2 instance.
+16. Read an existing VPC and deploy resources into it.
+17. Read subnets, route tables, or security groups created outside the current folder.
+18. Query cloud account, caller identity, or region information.
+19. Use externally managed values without duplicating them in code.
+
+## Benefits
+
+20. Reduces duplication.
+21. Avoids manual copy-paste of infrastructure IDs.
+22. Keeps configurations dynamic and environment-aware.
+23. Improves consistency when multiple modules or folders depend on shared infrastructure.
+
+## Important Points
+
+24. A data source does not create infrastructure.
+25. The looked-up object must already exist in the provider or target system.
+26. If the lookup arguments are wrong, the plan may fail because the object cannot be found.
+27. Data sources are useful for integrating new code with already existing infrastructure.
+28. They are often combined with variables, locals, outputs, and expressions.
