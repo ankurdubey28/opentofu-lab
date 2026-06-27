@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Day 13 Static Website</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">OpenTofu Lab</p>
+        <h1>Static website delivered with CloudFront</h1>
+        <p class="summary">
+          This page is stored in a private S3 bucket and served securely through
+          Amazon CloudFront.
+        </p>
+        <p class="status" id="site-status">Loading deployment details...</p>
+      </section>
+
+      <section class="details" aria-label="Project details">
+        <div>
+          <span class="label">Storage</span>
+          <strong>Amazon S3</strong>
+        </div>
+        <div>
+          <span class="label">CDN</span>
+          <strong>CloudFront</strong>
+        </div>
+        <div>
+          <span class="label">Security</span>
+          <strong>HTTPS + OAC</strong>
+        </div>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>

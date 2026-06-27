@@ -14,3 +14,16 @@ Terraform Console
 12. `terraform console` is used to test Terraform expressions interactively.
 13. It helps check functions, variables, and expression outputs.
 14. Exit the console using `exit` or `Ctrl+D`.
+
+Functions Covered
+15. String functions: `lower`, `upper`, `replace`, `split`, `join`, `trimspace`, `substr`
+16. Numeric functions: `max`, `min`, `ceil`
+17. Collection functions: `length`, `element`, `merge`, `concat`, `distinct`, `flatten`, `keys`, `values`
+18. Type conversion functions: `tonumber`, `tostring`, `toset`, `tolist`, `tomap`
+19. Lookup function: `lookup`
+20. File function: `file`
+21. Validation-related function: `contains`
+22. Error handling functions: `try`, `can`
+23. Default value function: `coalesce`
+24. JSON functions: `jsonencode`, `jsondecode`
+25. Date and time functions: `timestamp`, `formatdate`
